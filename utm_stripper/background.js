@@ -12,7 +12,7 @@ var log = function() {
 
 var onURLChanged = function(event, o) {
     var url = o.url,
-        tabId = o.tabId,
+        tabId = o.id,
         stripped;
     log('URL changed', event, o);
 
@@ -146,16 +146,7 @@ chrome.pageAction.onClicked.addListener(function(o) {
 
 
 // Listen on url change
-// TODO not use committed, use something that won't trigger during google redirecing
-chrome.webNavigation.onCommitted.addListener(function(o) {
-    onURLChanged('onCommitted', o);
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    if (changeInfo.status == 'loading')
+        onURLChanged('tabs.onUpdated', tab);
 });
-
-chrome.webNavigation.onHistoryStateUpdated.addListener(function(o) {
-    onURLChanged('onHistoryStateUpdated', o);
-});
-
-chrome.webNavigation.onReferenceFragmentUpdated.addListener(function(o) {
-    onURLChanged('onReferenceFragmentUpdated', o);
-});
-
