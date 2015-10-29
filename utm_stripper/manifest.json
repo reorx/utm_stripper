@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "utm_stripper",
+  "short_name": "utm_stripper",
+  "description": "",
+  "version": "0.0.1",
+  "minimum_chrome_version": "35",
+
+  "icons": {
+    "16": "assets/icon_16.png",
+    "128": "assets/icon_128.png"
+  },
+  "page_action": {
+    "default_icon": "assets/icon_16.png"
+  },
+  "permissions": [
+    "webNavigation",
+    "tabs"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  }
+}
