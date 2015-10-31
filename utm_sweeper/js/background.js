@@ -27,13 +27,18 @@ var DEBUG = true,
     changeIcon = function(tabId, type) {
         var icon_path;
         if (type == 'question') {
-            icon_path = 'assets/b/icon_q_48_3.png';
+            icon_path = 'images/icon_q_48_3.png';
         } else {
-            icon_path = 'assets/b/icon_48.png';
+            icon_path = 'images/icon_48.png';
         }
         chrome.pageAction.setIcon({
             tabId: tabId,
             path: icon_path
+        });
+    },
+    getCurrentTab = function(callback) {
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            callback(tabs[0]);
         });
     };
 
@@ -167,7 +172,7 @@ var stripURL = function(url, strip_query, strip_fragment) {
     if (strip_query || strip_fragment) {
         var rv = url_noquery;
         if (!strip_query)
-            rv += url_noquery;
+            rv += stripped_query;
         if (!strip_fragment)
             rv += fragment;
         return rv;
@@ -196,14 +201,9 @@ var stripURL = function(url, strip_query, strip_fragment) {
 };
 
 
-// Listen on click
-chrome.pageAction.onClicked.addListener(function(o) {
-    var tabId = o.id,
-        url = o.url,
-        stripped = stripURL(url);
-    console.log('click', tabId, arguments);
-
-    var st = getTabState(tabId);
+var stripTabURL = function(tabId, url, strip_query, strip_fragment) {
+    var stripped = stripURL(url, strip_query, strip_fragment),
+        st = getTabState(tabId);
 
     if (url != stripped) {
         // 2 means only next time (url changes) it would be popup, after next time it won't be
@@ -218,7 +218,17 @@ chrome.pageAction.onClicked.addListener(function(o) {
         st.popup_indicator = 0;
         setActionStatus(tabId, 'visiable_popup');
     }
-    console.log('stripped:', stripped);
+    log('stripped:', stripped);
+};
+
+
+// Listen on click
+chrome.pageAction.onClicked.addListener(function(o) {
+    var tabId = o.id,
+        url = o.url;
+    log('click', tabId, arguments);
+
+    stripTabURL(tabId, url);
 });
 
 
@@ -236,15 +246,21 @@ chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
 });
 
 
-
 // Listen on messages
 chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
     if (msg.action) {
         switch (msg.action) {
-            case 'sweep-query':
-                console.log('sweep-query');
+            case 'sweep-all':
+                getCurrentTab(function(tab) {
+                    stripTabURL(tab.id, tab.url, true, true);
+                });
+                log('sweep-all');
                 break;
             case 'sweep-fragment':
+                getCurrentTab(function(tab) {
+                    stripTabURL(tab.id, tab.url, false, true);
+                });
+                log('sweep-fragment');
                 break;
             default:
                 log_error('Bad message action:', st);
