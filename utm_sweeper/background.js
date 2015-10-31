@@ -230,6 +230,25 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 });
 
 
+// Listen on tab close
 chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
     log('tab removed', tabId);
+});
+
+
+
+// Listen on messages
+chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
+    if (msg.action) {
+        switch (msg.action) {
+            case 'sweep-query':
+                console.log('sweep-query');
+                break;
+            case 'sweep-fragment':
+                break;
+            default:
+                log_error('Bad message action:', st);
+                break;
+        }
+    }
 });
