@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "utm_stripper",
-  "short_name": "utm_stripper",
+  "name": "utm_sweeper",
+  "short_name": "utm_sweeper",
   "description": "",
   "version": "0.0.1",
   "minimum_chrome_version": "35",
