@@ -7,12 +7,11 @@
   "minimum_chrome_version": "35",
 
   "icons": {
-    "16": "assets/b/icon_16.png",
-    "48": "assets/b/icon_48.png",
-    "128": "assets/b/icon_128.png"
+    "16": "images/icon_16.png",
+    "48": "images/icon_48.png"
   },
   "page_action": {
-    "default_icon": "assets/b/icon_48.png"
+    "default_icon": "images/icon_48.png"
   },
   "permissions": [
     "webNavigation",
