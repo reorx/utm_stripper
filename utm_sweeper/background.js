@@ -9,14 +9,7 @@ var DEBUG = true,
     log_error = function() {
         console.error.apply(console, arguments);
     },
-    // Recycle on tab close
     tab_states = {},
-    // setTabState = function(tabId, last_url_noquery, query) {
-    //     tab_states[tabId] = {
-    //         last_url_noquery: last_url_noquery,
-    //         last_query: query
-    //     };
-    // },
     getTabState = function(tabId) {
         if (!(tabId in tab_states)) {
             tab_states[tabId] = {
@@ -40,11 +33,6 @@ var onURLChanged = function(event, o) {
         stripped;
     log('URL changed', event, o);
 
-    // if (st.popup_indicator < 2)
-    //     st.popup_indicator = 0;
-    // else
-    //     st.popup_indicator -= 1;
-
     var parsed = parseURL(url);
     log('url noquery:', parsed.url_noquery,
         '\nquery:', parsed.query,
@@ -59,25 +47,12 @@ var onURLChanged = function(event, o) {
         } else {
             setActionStatus(tabId, 'visible_click');
         }
-
-        // if (st.last_url_noquery == parsed.url_noquery) {
-        //     // Within the same
-        //     if (st.query) {
-        //         // If there's query before, show popup to give more options for page action button
-        //         setActionStatus(tabId, 'visiable_popup');
-        //     } else {
-        //         // If no query before, this time could still have a one click chance
-        //         setActionStatus(tabId, 'visible_click');
-        //     }
-        // } else {
-        //     // This means we open a new url, either from new tab or previous url,
-        //     // give a chance to strip by one click
-        //     setActionStatus(tabId, 'visible_click');
-        // }
     } else {
         // If no query, simpliy hide the page action button
         setActionStatus(tabId, 'invisible');
     }
+
+    // Whatever happen, a url change should reset popup_indicator to 0
     st.popup_indicator = 0;
 };
 
@@ -163,7 +138,7 @@ var parseURL = function(url) {
 };
 
 
-// idempotent !!!
+// This function should always be idempotent
 var stripURL = function(url) {
     // TODO avoid multiple calling of parseURL
     var parsed = parseURL(url),
@@ -226,7 +201,7 @@ chrome.pageAction.onClicked.addListener(function(o) {
 // Listen on url change
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     if (changeInfo.status == 'loading' &&
-        (tab.url.indexOf('http:') == 0 || tab.url.indexOf('https:') == 0))
+        (tab.url.indexOf('http:') === 0 || tab.url.indexOf('https:') === 0))
         onURLChanged('tabs.onUpdated', tab);
 });
 
