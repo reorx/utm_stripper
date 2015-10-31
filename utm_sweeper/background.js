@@ -152,7 +152,8 @@ var stripURL = function(url) {
 
     rules.forEach(function(rule) {
         var pattern = rule + '=[^&]*' + '&?',
-            re = new RegExp(pattern);
+            // Add 'g' flag so that String.replace can affect on all occurrences
+            re = new RegExp(pattern, 'g');
 
         stripped_query = stripped_query.replace(re, '');
         log('pattern:', pattern, 'stripped:', stripped_query);
