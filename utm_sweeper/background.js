@@ -23,6 +23,18 @@ var DEBUG = true,
     },
     deleteTabState = function(tabId) {
         delete tab_states[tabId];
+    },
+    changeIcon = function(tabId, type) {
+        var icon_path;
+        if (type == 'question') {
+            icon_path = 'assets/b/icon_q_48_3.png';
+        } else {
+            icon_path = 'assets/b/icon_48.png';
+        }
+        chrome.pageAction.setIcon({
+            tabId: tabId,
+            path: icon_path
+        });
     };
 
 
@@ -66,6 +78,7 @@ var setActionStatus = function(tabId, st) {
                 tabId: tabId,
                 popup: ''
             });
+            changeIcon(tabId, 'normal');
             chrome.pageAction.show(tabId);
             break;
         case 'visiable_popup':
@@ -74,6 +87,7 @@ var setActionStatus = function(tabId, st) {
                 tabId: tabId,
                 popup: 'popup.html'
             });
+            changeIcon(tabId, 'question');
             chrome.pageAction.show(tabId);
             break;
         case 'invisible':
@@ -139,7 +153,7 @@ var parseURL = function(url) {
 
 
 // This function should always be idempotent
-var stripURL = function(url) {
+var stripURL = function(url, strip_query, strip_fragment) {
     // TODO avoid multiple calling of parseURL
     var parsed = parseURL(url),
         url_noquery = parsed.url_noquery,
@@ -149,6 +163,15 @@ var stripURL = function(url) {
         stripped_url,
         rules = getRules(url),
         rule;
+
+    if (strip_query || strip_fragment) {
+        var rv = url_noquery;
+        if (!strip_query)
+            rv += url_noquery;
+        if (!strip_fragment)
+            rv += fragment;
+        return rv;
+    }
 
     rules.forEach(function(rule) {
         var pattern = rule + '=[^&]*' + '&?',
