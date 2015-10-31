@@ -36,31 +36,15 @@
     </style>
 </head>
 
-<!-- Options may be like
-    - complete strip
-    - configure rules
- -->
 <body>
     <div class="container">
         <ul>
-            <li><a class="btn-sweep-all" href="javascript:void(0);">Sweep all query</a></li>
-            <li><a class="btn-sweep-fragment" href="javascript:void(0);">Sweep fragment</a></li>
-            <li><a class="btn-configure" href="javascript:void(0);">Configure rules</a></li>
+            <li><a class="btn-sweep-all" href="#">Sweep all</a></li>
+            <li><a class="btn-sweep-fragment" href="#">Sweep fragment</a></li>
+            <li><a class="btn-configure" href="#">Configure rules</a></li>
         </ul>
     </div>
 
-    <script>
-    window.onload = function() {
-        document.querySelector('a.btn-sweep-all').addEventListener('click', function() {
-            console.log('clicked');
-        });
-        document.querySelector('a.btn-sweep-fragment').addEventListener('click', function() {
-            console.log('clicked');
-        });
-        document.querySelector('a.btn-configure').addEventListener('click', function() {
-            console.log('clicked');
-        });
-    };
-    </script>
+    <script src="js/popup-min.js"></script>
 </body>
 </html>
