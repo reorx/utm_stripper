@@ -1,3 +1,8 @@
+# UTM Sweeper
+
+[Chrome Extension](https://chrome.google.com/webstore/detail/utm-sweeper/mjjpjembbheeejhfeafapaicgoeaadeg)
+
+Sweep tracking parameters like utm_source in URL.
 
 
 
@@ -23,6 +28,14 @@ Global Rules:
 (TODO) Site Rules:
 
 - [ ] Taobao
+
+- [ ] Google
+
+    https://www.google.com/search?q=herman+miller&oq=herman+miller&aqs=chrome..69i57j0l5.4014j0j7&sourceid=chrome&es_sm=91&ie=UTF-8
+
+- [ ] Youtube
+
+    https://www.youtube.com/watch?v=jG5pJ1jsdEM&feature=cards&annotation_id=047dc874-a740-430b-a554-345e497827cd&src_vid=Lx61asUPdDI
 
 - [ ] Amazon
 
