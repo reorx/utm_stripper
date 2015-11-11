@@ -236,6 +236,6 @@
 
     // Simplest way to define a module (not compatible with AMD or CommonJS,
     // just in a so called modular style)
-    window.stripper = exports;
+    window.sweeper = exports;
     return exports;
 })(window);

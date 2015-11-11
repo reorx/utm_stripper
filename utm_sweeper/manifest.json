@@ -20,7 +20,7 @@
   ],
   "background": {
     "scripts": [
-      "js/stripper.min.js",
+      "js/sweeper.min.js",
       "js/background.min.js"
     ]
   }
