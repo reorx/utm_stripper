@@ -3,7 +3,7 @@
   "name": "UTM Sweeper",
   "short_name": "utm_sweeper",
   "description": "",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "minimum_chrome_version": "35",
 
   "icons": {
@@ -20,7 +20,8 @@
   ],
   "background": {
     "scripts": [
-      "js/background-min.js"
+      "js/stripper.min.js",
+      "js/background.min.js"
     ]
   }
 }
