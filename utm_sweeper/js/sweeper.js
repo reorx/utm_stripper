@@ -3,6 +3,8 @@
     // NOTE set to false in production
     var exports = {},
         DEBUG = true,
+        ICON_PATH = 'images/icon_round_48.png',
+        ICON_2_PATH = 'images/icon_round_blue_48.png',
         log = function() {
             if (DEBUG)
                 console.log.apply(console, arguments);
@@ -28,9 +30,9 @@
         changeIcon = function(tabId, type) {
             var icon_path;
             if (type == 'question') {
-                icon_path = 'images/icon_q_48_3.png';
+                icon_path = ICON_2_PATH;
             } else {
-                icon_path = 'images/icon_48.png';
+                icon_path = ICON_PATH;
             }
             chrome.pageAction.setIcon({
                 tabId: tabId,
