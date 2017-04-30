@@ -1,3 +1,4 @@
 *.crx
 *.zip
 config.codekit
+dist/
